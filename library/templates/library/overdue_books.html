@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overdue Books</title>
+</head>
+<body>
+    <h1>Overdue Books</h1>
+
+
+    {% if overdue %}
+        <ul>
+        {% for record in overdue %}
+            <li>
+                <strong>Book:</strong> {{ record.book.title }}<br>
+                <strong>Borrowed By:</strong> {{ record.user.username }}<br>
+                <strong>Due Date:</strong> {{ record.due_date|date:"Y-m-d" }}<br>
+            </li>
+            <br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No overdue books.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

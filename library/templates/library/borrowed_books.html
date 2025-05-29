@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrowed Books</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'library/styles.css' %}">
+</head>
+<body>
+    <h1>Your Borrowed Books</h1>
+
+    <!-- Messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Borrowed Books List -->
+    {% if borrows %}
+        <ul class="book-list">
+        {% for borrow in borrows %}
+            <li class="book-item">
+                <strong>Book:</strong> {{ borrow.book.title }}<br>
+                <strong>Author:</strong> {{ borrow.book.author }}<br>
+                <strong>Borrowed On:</strong> {{ borrow.borrowed_at|date:"Y-m-d" }}<br>
+                <strong>Due Date:</strong> {{ borrow.due_date|date:"Y-m-d" }}<br>
+                <form method="post" action="{% url 'return_book' borrow.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Return Book</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no borrowed books.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'book_list' %}">Back to Book List</a>
+</body>
+</html>

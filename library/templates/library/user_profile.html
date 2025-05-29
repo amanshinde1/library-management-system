@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}</h1>
+    <p>Total Books Borrowed: {{ total_borrowed }}</p>
+
+    <h2>Your Borrowed Books:</h2>
+    {% if borrowed_books %}
+        <ul>
+            {% for record in borrowed_books %}
+                <li>
+                    <strong>Book:</strong> {{ record.book.title }} <br>
+                    <strong>Borrowed On:</strong> {{ record.borrowed_at|date:"Y-m-d" }} <br>
+                    <strong>Returned:</strong> {{ record.returned|yesno:"Yes,No" }}
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't borrowed any books yet.</p>
+    {% endif %}
+</body>
+</html>

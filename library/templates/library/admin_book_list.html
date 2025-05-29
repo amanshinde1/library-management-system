@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Book List</title>
+</head>
+<body>
+    <h1>Admin Book List</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: green;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if books %}
+        <ul>
+        {% for book in books %}
+            <li>
+                <strong>Title:</strong> {{ book.title }}<br>
+                <strong>Author:</strong> {{ book.author }}<br>
+                <strong>Status:</strong> {{ book.available|yesno:"Available,Not Available" }}<br>
+                <a href="{% url 'edit_book' book.id %}">Edit</a> |
+                <a href="{% url 'delete_book' book.id %}">Delete</a>
+            </li>
+            <br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books available for management.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'add_book' %}">Add New Book</a> |
+    <a href="{% url 'book_list' %}">Back to Public View</a>
+</body>
+</html>
