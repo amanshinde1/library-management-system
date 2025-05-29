@@ -1,4 +1,4 @@
-# librabry-management-system
+# library-management-system
  PostgreSQL schema for Library Management System.
 
 # Library Management System
