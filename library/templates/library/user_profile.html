@@ -1,26 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Profile</title>
-</head>
-<body>
-    <h1>Welcome, {{ user.username }}</h1>
-    <p>Total Books Borrowed: {{ total_borrowed }}</p>
+{% extends 'base.html' %}
+{% load static %}
 
-    <h2>Your Borrowed Books:</h2>
-    {% if borrowed_books %}
-        <ul>
-            {% for record in borrowed_books %}
-                <li>
-                    <strong>Book:</strong> {{ record.book.title }} <br>
-                    <strong>Borrowed On:</strong> {{ record.borrowed_at|date:"Y-m-d" }} <br>
-                    <strong>Returned:</strong> {{ record.returned|yesno:"Yes,No" }}
-                </li>
-                <br>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You haven't borrowed any books yet.</p>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+<div class="container" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+    <h2 style="text-align: center; margin-bottom: 30px;">My Profile</h2>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Profile Information -->
+        <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+            <h4 style="margin-bottom: 10px;">User Info</h4>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {% if user.first_name or user.last_name %}
+                <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            {% endif %}
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary" style="margin-top: 10px;">Edit Profile</a>
+        </div>
+
+        <!-- Borrowed Books -->
+        <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fdfdfd;">
+            <h4 style="margin-bottom: 10px;">Borrowed Books</h4>
+            {% if borrowed_books %}
+                <ul style="list-style-type: none; padding-left: 0;">
+                    {% for borrow in borrowed_books %}
+                        <li style="margin-bottom: 8px;">
+                            📚 {{ borrow.book.title }} — borrowed on {{ borrow.borrowed_at|date:"Y-m-d" }}
+                            {% if not borrow.returned %}
+                                <span style="color: red;">(Not Returned)</span>
+                            {% else %}
+                                <span style="color: green;">(Returned)</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You haven’t borrowed any books yet.</p>
+            {% endif %}
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;">
+            <strong>Total Books Borrowed:</strong> {{ total_borrowed }}
+        </div>
+    </div>
+</div>
+{% endblock %}

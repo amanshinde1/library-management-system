@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding: 30px;">
+  <h2>Library Reports</h2>
+
+  <p><strong>Total Books:</strong> {{ total_books }}</p>
+  <p><strong>Books Currently Borrowed:</strong> {{ total_borrowed }}</p>
+  <p><strong>Total Unique Readers:</strong> {{ total_users }}</p>
+
+  <hr>
+
+  <h3>Most Borrowed Books</h3>
+  <canvas id="mostBorrowedChart" width="100" height="50"></canvas>
+
+  <h3>Most Active Readers</h3>
+  <canvas id="mostActiveReadersChart" width="100" height="50"></canvas>
+
+  <h3>Book Availability</h3>
+  <canvas id="bookAvailabilityChart" width="100" height="50"></canvas>
+</div>
+
+<!-- Include Chart.js once -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Most Borrowed Books chart
+  const ctx1 = document.getElementById('mostBorrowedChart').getContext('2d');
+  const mostBorrowedChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: {{ most_borrowed_books_labels|safe }},
+      datasets: [{
+        label: 'Number of Borrows',
+        data: {{ most_borrowed_books_data|safe }},
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  });
+
+  // Most Active Readers chart
+  const ctx2 = document.getElementById('mostActiveReadersChart').getContext('2d');
+  const mostActiveReadersChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: {{ most_active_readers_labels|safe }},
+      datasets: [{
+        label: 'Number of Borrows',
+        data: {{ most_active_readers_data|safe }},
+        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+        borderColor: 'rgba(255, 159, 64, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  });
+
+  // Book Availability pie chart
+  const ctx3 = document.getElementById('bookAvailabilityChart').getContext('2d');
+  const bookAvailabilityChart = new Chart(ctx3, {
+    type: 'pie',
+    data: {
+      labels: ['Available Books', 'Borrowed Books'],
+      datasets: [{
+        label: 'Books Availability',
+        data: [{{ available_books }}, {{ borrowed_books_count }}],
+        backgroundColor: [
+          'rgba(25, 192, 192, 0.6)',
+          'rgba(255, 19, 132, 0.6)'
+        ],
+        borderColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 99, 132, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+{% endblock %}

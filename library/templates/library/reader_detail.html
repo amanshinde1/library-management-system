@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="padding: 30px;">
+  <h2>Reader Details</h2>
+
+  <p><strong>Name:</strong> {{ reader.name }}</p>
+  <p><strong>Contact:</strong> {{ reader.contact }}</p>
+  <p><strong>Reference ID:</strong> {{ reader.reference_id }}</p>
+  <p><strong>Address:</strong> {{ reader.address }}</p>
+
+  <hr>
+
+  <h3>Currently Borrowed Books</h3>
+  {% if active_borrows %}
+    <ul>
+      {% for borrow in active_borrows %}
+        <li>
+          <strong>{{ borrow.book.title }}</strong> – Borrowed on {{ borrow.borrowed_at|date:"Y-m-d" }}
+          <span style="color: red;">Not Returned</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No active borrows.</p>
+  {% endif %}
+
+  <hr>
+
+  <h3>Borrow History</h3>
+  {% if past_borrows %}
+    <ul>
+      {% for borrow in past_borrows %}
+        <li>
+          <strong>{{ borrow.book.title }}</strong> – Borrowed on {{ borrow.borrowed_at|date:"Y-m-d" }}
+          {% if borrow.returned_at %}
+            (Returned on {{ borrow.returned_at|date:"Y-m-d" }})
+          {% else %}
+            <span style="color: orange;">Return date missing</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No borrow history available.</p>
+  {% endif %}
+
+  <div style="margin-top: 20px;">
+    <a href="{% url 'reader_list' %}">← Back to Readers</a>
+  </div>
+</div>
+{% endblock %}

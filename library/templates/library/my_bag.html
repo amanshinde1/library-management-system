@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Container styling */
+  .container {
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: Arial, sans-serif;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* List styling */
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  li {
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  li strong {
+    font-size: 1.1em;
+  }
+
+  /* Remove link button */
+  a.remove-link {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  a.remove-link:hover {
+    background-color: #e04343;
+  }
+
+  /* Checkout button */
+  a.checkout-btn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0 auto;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  a.checkout-btn:hover {
+    background-color: #218838;
+  }
+
+  /* Empty bag message */
+  p.empty-msg {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+  }
+
+  /* Back to book list link */
+  a.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  a.back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container">
+  <h2>My Bag</h2>
+
+  {% if books %}
+    <ul>
+      {% for book in books %}
+        <li>
+          <strong>{{ book.title }}</strong> by {{ book.author }}
+          <a href="{% url 'remove_from_bag' book.id %}?next={{ request.get_full_path }}" class="remove-link">Remove</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'checkout' %}?next={{ request.get_full_path }}" class="checkout-btn">Checkout</a>
+  {% else %}
+    <p class="empty-msg">Your bag is empty.</p>
+    <a href="{% url 'book_list' %}" class="back-link">Back to Book List</a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 40px auto; font-family: 'Roboto', sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+
+  <h2>Return Book</h2>
+  <p>Are you sure you want to return the book: <strong>{{ borrow.book.title }}</strong>?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Confirm Return</button>
+    <a href="{% url 'book_list' %}" style="margin-left: 10px;">Cancel</a>
+  </form>
+
+</div>
+{% endblock %}

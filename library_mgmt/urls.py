@@ -1,7 +1,7 @@
 """
 URL configuration for library_mgmt project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `urlpatterns` list routes URLs to views. For more information please fsee:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
 Examples:
 Function views
@@ -20,12 +20,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 from django.contrib.auth import views as auth_views
+from library.views import landing_page
 
 urlpatterns = [
-    path('', lambda request: redirect('books/')),
     path('admin/', admin.site.urls),
+
+    # ✅ Landing page at root
+    path('', landing_page, name='landing'),
+
+    # ✅ App routes (books/, borrowed/, etc.)
     path('', include('library.urls')),
+
+    # ✅ Login page
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+
+    path('library/', include(('library.urls', 'library'), namespace='library')),
+
+    path('captcha/', include('captcha.urls')),
+
 ]
 
 if settings.DEBUG:

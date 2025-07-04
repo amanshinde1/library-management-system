@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <h2 style="text-align: center; margin-bottom: 20px;">Edit Profile</h2>
+
+  {% if messages %}
+    <ul style="list-style-type: none; padding: 0;">
+      {% for message in messages %}
+        <li style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" style="max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+    {% csrf_token %}
+
+    <h3 style="border-bottom: 1px solid #ccc;">Basic Info</h3>
+    {% for field in user_form %}
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">{{ field.label_tag }}</label><br>
+        {{ field }}
+        {% if field.errors %}
+          <div style="color: red;">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <h3 style="border-bottom: 1px solid #ccc;">Profile Info</h3>
+    {% for field in profile_form %}
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">{{ field.label_tag }}</label><br>
+        {{ field }}
+        {% if field.errors %}
+          <div style="color: red;">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <h3 style="border-bottom: 1px solid #ccc;">Change Password</h3>
+    {% for field in password_form %}
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">{{ field.label_tag }}</label><br>
+        {{ field }}
+        {% if field.errors %}
+          <div style="color: red;">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <div style="text-align: center; margin-top: 20px;">
+      <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Save Changes</button>
+    </div>
+  </form>
+{% endblock %}

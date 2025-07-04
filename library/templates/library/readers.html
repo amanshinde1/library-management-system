@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Readers | Peace Library</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .form-container {
+            background: #512da8;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 30%;
+        }
+        .form-control {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+        .table-container {
+            margin-left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            flex-grow: 1;
+        }
+        .reader-name {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        input[type="submit"], .btn {
+            background: #007bff;
+            border: none;
+            padding: 8px 16px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        .notes {
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Register new reader -->
+        <div class="form-container">
+            <h2>Register new reader</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.name.label_tag }}<br>
+                {{ form.name }}<br>
+                {{ form.contact.label_tag }}<br>
+                {{ form.contact }}<br>
+                {{ form.reference_id.label_tag }}<br>
+                {{ form.reference_id }}<br>
+                {{ form.address.label_tag }}<br>
+                {{ form.address }}<br>
+                <input type="submit" value="Save">
+            </form>
+            <div class="notes">
+                <ul>
+                    <li>Readers should not register multiple times</li>
+                    <li>Duplicate reader registrations will be deactivated</li>
+                    <li>Contact information provided above must be correct and subject to verification</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Reader list -->
+        <div class="table-container">
+            <h2>Search readers</h2>
+            <form class="search-form" method="get">
+                <input type="text" name="search" placeholder="Search" class="form-control">
+                <input type="submit" value="Search">
+            </form>
+
+            <p>{{ readers.count }} readers in the system..</p>
+            <table>
+                <tr>
+                    <th>Reader ID</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Reference ID</th>
+                    <th>Address</th>
+                </tr>
+                {% for reader in readers %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><span class="reader-name">{{ reader.name }}</span></td>
+                    <td>{{ reader.contact }}</td>
+                    <td>{{ reader.reference_id }}</td>
+                    <td>{{ reader.address }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5">No readers found.</td></tr>
+                {% endfor %}
+            <div class="pagination">
+                <div style="text-align: right; margin-bottom: 10px;">
+    <a href="{% url 'export_readers_csv' %}" style="padding: 8px 16px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 5px;">
+        ⬇️ Export as CSV
+    </a>
+</div>
+
+    <span class="step-links">
+        {% if readers.has_previous %}
+            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page=1">First</a>
+            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ readers.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ readers.number }} of {{ readers.paginator.num_pages }}.
+        </span>
+
+        {% if readers.has_next %}
+            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ readers.next_page_number }}">Next</a>
+            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ readers.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </span>
+</div>
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>
