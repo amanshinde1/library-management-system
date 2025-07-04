@@ -1,41 +1,93 @@
-# library-management-system
- PostgreSQL schema for Library Management System.
-
 # Library Management System
 
-A PostgreSQL-based Library Management System to manage books, students, and issued books efficiently.
+A PostgreSQL-based Library Management System built with Django. This system allows admins and users to manage, borrow, and track books efficiently.
 
-## 📂 Project Structure
+---
 
-- `library_schema.sql.txt`: SQL script for creating and populating the database.
-- `README.md`: Project overview and usage instructions.
+## 📁 Project Structure
+- `library/` – Django app with models, views, forms, templates.
+- `library_mgmt/` – Django project configuration.
+- `templates/` – Custom HTML templates with improved UI/UX.
+- `static/` – Static assets like CSS and JS.
 
-## 🧰 Features
+---
 
-- Book catalog with availability status
-- Student records with enrollment date
-- Issued book tracking with return dates
-- Data pre-filled for testing/demo
+## ✅ Features
+### Core Functionality
+- 📚 **Book Catalog** – List, search, filter, and view book availability.
+- 🙋‍♂️ **Student/Reader Records** – Add, edit, and manage users.
+- 🔁 **Borrow/Return System** – Borrow available books, track borrowed history.
+- 🛒 **My Bag** – Add books to bag before borrowing.
+
+### Admin Features
+- 🙋‍♂️ **Admin Dashboard** – Summarizes book and borrow stats.
+- 📊 **Admin Reports** – Chart.js graphs for most borrowed books, active readers, availability.
+- 📂 **Export Readers to CSV** – Export filtered reader data.
+- 📧 **Email Reminders** – Sends overdue reminders.
+
+### Account & Security
+- 🔐 **Login/Register** – Secure auth using Django's auth system.
+- 🔄 **Password Reset** – Email-based reset functionality.
+- 🧑‍🎓 **Profile Editing** – Change name, avatar, password, etc.
+
+### UI/UX
+- 🎨 Fully styled UI with improved responsiveness.
+- 📱 Mobile-friendly templates.
+
+---
 
 ## 🛠️ Technologies Used
+- Django (Backend Framework)
+- PostgreSQL (Database)
+- Bootstrap 4 & Custom CSS (Frontend)
+- Chart.js (Admin Analytics Dashboard)
+- Python 3.13
 
-- PostgreSQL
-- SQL
+---
 
-## 🧪 How to Use
+## 🚀 Getting Started
+### 1. Clone Repo & Setup
+```bash
+git clone https://github.com/amanshinde1/library-management-system.git
+cd library-management-system
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-1. Open **DBeaver** (or any PostgreSQL-compatible client).
-2. Connect to your PostgreSQL database.
-3. Run the `library_schema.sql.txt` script to:
-   - Create tables
-   - Insert sample data
+### 2. Setup PostgreSQL
+Create a PostgreSQL database and configure it in `settings.py`:
+```python
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'your_db_name',
+    'USER': 'your_username',
+    'PASSWORD': 'your_password',
+    'HOST': 'localhost',
+    'PORT': '5432',
+  }
+}
+```
+
+### 3. Run Migrations & Server
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
+---
 
 ## 👨‍💻 Author
+**Aman Shinde**
 
-- Aman Shinde
+---
 
 ## 📄 License
-
 This project is licensed under the MIT License.
 
+---
 
+## 🌐 Live Demo (Optional)
+Coming soon — deploy on Render or Railway!
