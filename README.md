@@ -1,8 +1,20 @@
 # Library Management System
 
+
+---
+
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![Django](https://img.shields.io/badge/Django-5.2-green)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 A PostgreSQL-based Library Management System built with Django. This system allows admins and users to manage, borrow, and track books efficiently.
 
 ---
+
+## 🌐 Live Demo
+
+Try the live project here: [https://amanshinde.pythonanywhere.com/](https://amanshinde.pythonanywhere.com/)
+
 
 ## 📁 Project Structure
 - `library/` – Django app with models, views, forms, templates.
@@ -54,8 +66,6 @@ Here are key features of the Library Management System demonstrated via screensh
 ### 📖 Borrowed Books View
 ![Borrowed Books](screenshots/Borrowed%20Books%20View.png)
 
-### 📜 Borrow History
-![Borrow History](screenshots/Borrow%20History.png)
 
 ### 👥 Readers List (Admin Only)
 ![Readers List](screenshots/Readers%20List%20%28Admin%20Only%29.png)
@@ -109,6 +119,8 @@ DATABASES = {
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
+
+Open http://localhost:8000 in your browser to see the app.
 ```
 
 ---
