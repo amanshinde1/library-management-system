@@ -1,13 +1,15 @@
 from pathlib import Path
 import django_heroku
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-jg401m25og_8&na5b)l7i!!^$tc_v!3+juybak4xpqa%m!8(w5'
+# Load secret key from environment variable
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['your-app-name.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='amanshinde.pythonanywhere.com', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'library',
-    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -50,35 +51,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'library_mgmt.wsgi.application'
 
+# Use PostgreSQL in production, fallback to SQLite if not set
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': config('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
+        'USER': config('DB_USER', default=''),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Static files
@@ -92,25 +86,22 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'library@example.com'
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='library@example.com')
 
 # Heroku settings
 django_heroku.settings(locals())
-
 
 LOGIN_REDIRECT_URL = 'book_list'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
-
-
-CAPTCHA_FONT_SIZE = 40
-CAPTCHA_LENGTH = 5
-CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)  # Just dots, no lines
-CAPTCHA_BACKGROUND_COLOR = '#ffffff'  # White background
-CAPTCHA_FOREGROUND_COLOR = '#000000'  # Black text
+# Uncomment and configure CAPTCHA as needed
+# CAPTCHA_FONT_SIZE = 40
+# CAPTCHA_LENGTH = 5
+# CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+# CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+# CAPTCHA_FOREGROUND_COLOR = '#000000'
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
@@ -121,4 +112,3 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-

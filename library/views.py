@@ -299,8 +299,9 @@ def add_to_bag(request, book_id):
         messages.success(request, "Book added to your bag.")
     else:
         messages.info(request, "Book already in your bag.")
-    next_url = request.GET.get('next', 'book_list')
-    return redirect(next_url)
+    return redirect('my_bag')  # Redirect to My Bag page
+
+
 
 
 @login_required(login_url='/login/')
@@ -340,6 +341,7 @@ def checkout(request):
         return redirect('my_bag')
 
     due_date = timezone.now() + timedelta(days=7)
+    borrowed_titles = []
 
     for book in books:
         Borrow.objects.create(
@@ -350,10 +352,23 @@ def checkout(request):
         )
         book.available = False
         book.save()
+        borrowed_titles.append(book.title)
 
+    # ✅ Email confirmation
+    subject = "Library Checkout Confirmation"
+    message = (
+        f"Hi {request.user.username},\n\n"
+        f"You have successfully borrowed the following books:\n\n"
+        + "\n".join(f"- {title}" for title in borrowed_titles) +
+        f"\n\nPlease return them by {due_date.strftime('%Y-%m-%d')}.\n\n"
+        "Thank you and happy reading!\nPeace Library"
+    )
+    send_notification_email(subject, message, [request.user.email])
+
+    # ✅ Clear bag and show UI message
     request.session['my_bag'] = []
+    messages.success(request, f"You successfully borrowed {len(books)} book(s). A confirmation email has been sent.")
 
-    messages.success(request, f"You successfully borrowed {len(books)} book(s).")
     return redirect('borrowed_books')
 
 

@@ -8,8 +8,8 @@ import re
 
 from .models import UserProfile
 
-from django.contrib.auth.forms import AuthenticationForm
-from captcha.fields import CaptchaField
+
+
 
 
 class BookForm(forms.ModelForm):
@@ -148,5 +148,5 @@ class CustomPasswordChangeForm(forms.Form):
 
         return cleaned_data
 
-class CaptchaAuthenticationForm(AuthenticationForm):
-    captcha = CaptchaField()
+#class CaptchaAuthenticationForm(AuthenticationForm):
+ #   captcha = CaptchaField()

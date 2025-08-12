@@ -1,10 +1,12 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .models import Book, Borrow, Reader, UserProfile
 from django.utils import timezone
-from .forms import CustomPasswordChangeForm
 from datetime import timedelta
+
+from .models import Book, Borrow, Reader, UserProfile
+from .forms import CustomPasswordChangeForm
+
 
 class BookListViewTest(TestCase):
     @classmethod
@@ -28,6 +30,7 @@ class BookListViewTest(TestCase):
         response = self.client.get(reverse('book_list'))
         self.assertEqual(len(response.context['page_obj']), 2)
 
+
 class BorrowBookTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -45,6 +48,7 @@ class BorrowBookTest(TestCase):
         self.assertFalse(borrow_entry.book.available)
         self.assertFalse(borrow_entry.returned)
         self.assertEqual(Borrow.objects.count(), 1)
+
 
 class ReturnBookTest(TestCase):
     def setUp(self):
@@ -64,6 +68,7 @@ class ReturnBookTest(TestCase):
         self.assertIsNotNone(self.borrow.returned_at)
         self.assertTrue(self.book.available)
 
+
 class ReaderAccessTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -80,6 +85,7 @@ class ReaderAccessTest(TestCase):
         self.client.login(username='user', password='user123')
         response = self.client.get(self.url)
         self.assertNotEqual(response.status_code, 200)
+
 
 class ExportReadersCSVTest(TestCase):
     def setUp(self):
@@ -109,6 +115,7 @@ class ExportReadersCSVTest(TestCase):
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
 
+
 class CheckoutBagTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -118,6 +125,8 @@ class CheckoutBagTest(TestCase):
 
     def test_checkout_borrows_only_available_books_and_clears_bag(self):
         self.client.login(username='peace', password='testpass123')
+
+        # Set session variable for bag
         session = self.client.session
         session['my_bag'] = [str(self.book1.id), str(self.book2.id)]
         session.save()
@@ -129,11 +138,14 @@ class CheckoutBagTest(TestCase):
 
         self.assertRedirects(response, reverse('borrowed_books'))
         self.assertFalse(self.book1.available)
-        self.assertFalse(self.book2.available)
+        self.assertFalse(self.book2.available)  # Still false, since it was unavailable before checkout
         self.assertEqual(Borrow.objects.filter(user=self.user, book=self.book1).count(), 1)
         self.assertEqual(Borrow.objects.filter(user=self.user, book=self.book2).count(), 0)
+
+        # Check that bag is cleared after checkout
         session = self.client.session
         self.assertEqual(session.get('my_bag', []), [])
+
 
 class UserProfileEditTest(TestCase):
     def setUp(self):
@@ -176,6 +188,7 @@ class UserProfileEditTest(TestCase):
         login_successful = self.client.login(username='peace', password='newstrongpass123')
         self.assertTrue(login_successful)
 
+
 class AdminReportsTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -188,15 +201,17 @@ class AdminReportsTest(TestCase):
         self.client.login(username='admin', password='admin123')
         response = self.client.get(reverse('admin_reports'))
         self.assertEqual(response.status_code, 200)
+        # Check keys present in context
         self.assertIn('total_books', response.context)
-        self.assertIn('most_borrowed_books', response.context)
-        self.assertIn('most_active_readers', response.context)
+        self.assertIn('most_borrowed_books_labels', response.context)
+        self.assertIn('most_active_readers_labels', response.context)
 
     def test_non_admin_cannot_view_reports(self):
         self.client.login(username='user', password='user123')
         response = self.client.get(reverse('admin_reports'))
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
+
 
 class OverdueBooksTest(TestCase):
     def setUp(self):
@@ -223,6 +238,7 @@ class OverdueBooksTest(TestCase):
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
 
+
 class BorrowHistoryTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -235,6 +251,7 @@ class BorrowHistoryTest(TestCase):
         response = self.client.get(reverse('borrow_history'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'History Book')
+
 
 class ReaderCRUDTest(TestCase):
     def setUp(self):

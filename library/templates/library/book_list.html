@@ -48,6 +48,7 @@
                     {% if book.id in borrowed_book_ids %}
                         <span class="text-info">You borrowed this</span>
                     {% elif book.available %}
+                        <a href="{% url 'add_to_bag' book.id %}" class="btn btn-sm btn-primary mt-2 me-2">Add to Bag</a>
                         <a href="{% url 'borrow_book' book.id %}" class="btn btn-sm btn-success mt-2">Borrow</a>
                     {% else %}
                         <button class="btn btn-sm btn-secondary mt-2" disabled>Not Available</button>

@@ -1,0 +1,618 @@
+[
+{
+  "model": "library.book",
+  "pk": 2,
+  "fields": {
+    "title": "Authority",
+    "author": "Ankit Sajwan",
+    "description": "Taking Authority.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 3,
+  "fields": {
+    "title": "P E A C E",
+    "author": "Prince Of Peace",
+    "description": "",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 4,
+  "fields": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "description": "A classic novel set in the 1920s.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 5,
+  "fields": {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "description": "A novel about racial injustice in the Deep South.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 6,
+  "fields": {
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "Dystopian future with totalitarian surveillance.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 7,
+  "fields": {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "description": "A journey of self-discovery and dreams.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 8,
+  "fields": {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "description": "A fantasy adventure before Lord of the Rings.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 9,
+  "fields": {
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "description": "Small habits for big changes.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 10,
+  "fields": {
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "description": "Hands-on Python programming guide.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 11,
+  "fields": {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "description": "A handbook of agile software craftsmanship.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 12,
+  "fields": {
+    "title": "Ikigai",
+    "author": "Francesc Miralles",
+    "description": "The Japanese secret to a long and happy life.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 13,
+  "fields": {
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "description": "Rules for focused success in a distracted world.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 14,
+  "fields": {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "description": "A popular book titled 'Pride and Prejudice' by Jane Austen.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 15,
+  "fields": {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "description": "A popular book titled 'The Catcher in the Rye' by J.D. Salinger.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 16,
+  "fields": {
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "description": "A popular book titled 'Fahrenheit 451' by Ray Bradbury.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 17,
+  "fields": {
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "description": "A popular book titled 'The Lord of the Rings' by J.R.R. Tolkien.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 18,
+  "fields": {
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "description": "A popular book titled 'Moby-Dick' by Herman Melville.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 19,
+  "fields": {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "description": "A popular book titled 'Brave New World' by Aldous Huxley.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 20,
+  "fields": {
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "description": "A popular book titled 'Crime and Punishment' by Fyodor Dostoevsky.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 21,
+  "fields": {
+    "title": "Jane Eyre",
+    "author": "Charlotte Brontë",
+    "description": "A popular book titled 'Jane Eyre' by Charlotte Brontë.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 22,
+  "fields": {
+    "title": "The Picture of Dorian Gray",
+    "author": "Oscar Wilde",
+    "description": "A popular book titled 'The Picture of Dorian Gray' by Oscar Wilde.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 23,
+  "fields": {
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "description": "A popular book titled 'Wuthering Heights' by Emily Brontë.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 24,
+  "fields": {
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "description": "A popular book titled 'Animal Farm' by George Orwell.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 25,
+  "fields": {
+    "title": "War and Peace",
+    "author": "Leo Tolstoy",
+    "description": "A popular book titled 'War and Peace' by Leo Tolstoy.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 26,
+  "fields": {
+    "title": "The Kite Runner",
+    "author": "Khaled Hosseini",
+    "description": "A popular book titled 'The Kite Runner' by Khaled Hosseini.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 27,
+  "fields": {
+    "title": "A Thousand Splendid Suns",
+    "author": "Khaled Hosseini",
+    "description": "A popular book titled 'A Thousand Splendid Suns' by Khaled Hosseini.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 28,
+  "fields": {
+    "title": "The Book Thief",
+    "author": "Markus Zusak",
+    "description": "A popular book titled 'The Book Thief' by Markus Zusak.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 29,
+  "fields": {
+    "title": "The Da Vinci Code",
+    "author": "Dan Brown",
+    "description": "A popular book titled 'The Da Vinci Code' by Dan Brown.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 30,
+  "fields": {
+    "title": "Angels and Demons",
+    "author": "Dan Brown",
+    "description": "A popular book titled 'Angels and Demons' by Dan Brown.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 31,
+  "fields": {
+    "title": "Inferno",
+    "author": "Dan Brown",
+    "description": "A popular book titled 'Inferno' by Dan Brown.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 32,
+  "fields": {
+    "title": "Digital Fortress",
+    "author": "Dan Brown",
+    "description": "A popular book titled 'Digital Fortress' by Dan Brown.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 33,
+  "fields": {
+    "title": "Deception Point",
+    "author": "Dan Brown",
+    "description": "A popular book titled 'Deception Point' by Dan Brown.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 34,
+  "fields": {
+    "title": "The Girl on the Train",
+    "author": "Paula Hawkins",
+    "description": "A popular book titled 'The Girl on the Train' by Paula Hawkins.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 35,
+  "fields": {
+    "title": "Gone Girl",
+    "author": "Gillian Flynn",
+    "description": "A popular book titled 'Gone Girl' by Gillian Flynn.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 36,
+  "fields": {
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
+    "description": "A popular book titled 'The Silent Patient' by Alex Michaelides.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 37,
+  "fields": {
+    "title": "Verity",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'Verity' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 38,
+  "fields": {
+    "title": "It Ends With Us",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'It Ends With Us' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 39,
+  "fields": {
+    "title": "It Starts With Us",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'It Starts With Us' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 40,
+  "fields": {
+    "title": "Ugly Love",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'Ugly Love' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 41,
+  "fields": {
+    "title": "November 9",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'November 9' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 42,
+  "fields": {
+    "title": "Reminders of Him",
+    "author": "Colleen Hoover",
+    "description": "A popular book titled 'Reminders of Him' by Colleen Hoover.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 43,
+  "fields": {
+    "title": "Before We Were Strangers",
+    "author": "Renée Carlino",
+    "description": "A popular book titled 'Before We Were Strangers' by Renée Carlino.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 44,
+  "fields": {
+    "title": "Eleanor Oliphant Is Completely Fine",
+    "author": "Gail Honeyman",
+    "description": "A popular book titled 'Eleanor Oliphant Is Completely Fine' by Gail Honeyman.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 45,
+  "fields": {
+    "title": "The Midnight Library",
+    "author": "Matt Haig",
+    "description": "A popular book titled 'The Midnight Library' by Matt Haig.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 46,
+  "fields": {
+    "title": "The Seven Husbands of Evelyn Hugo",
+    "author": "Taylor Jenkins Reid",
+    "description": "A popular book titled 'The Seven Husbands of Evelyn Hugo' by Taylor Jenkins Reid.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 47,
+  "fields": {
+    "title": "Daisy Jones & The Six",
+    "author": "Taylor Jenkins Reid",
+    "description": "A popular book titled 'Daisy Jones & The Six' by Taylor Jenkins Reid.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 48,
+  "fields": {
+    "title": "Malibu Rising",
+    "author": "Taylor Jenkins Reid",
+    "description": "A popular book titled 'Malibu Rising' by Taylor Jenkins Reid.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 49,
+  "fields": {
+    "title": "One True Loves",
+    "author": "Taylor Jenkins Reid",
+    "description": "A popular book titled 'One True Loves' by Taylor Jenkins Reid.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 50,
+  "fields": {
+    "title": "The Love Hypothesis",
+    "author": "Ali Hazelwood",
+    "description": "A popular book titled 'The Love Hypothesis' by Ali Hazelwood.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 51,
+  "fields": {
+    "title": "Love on the Brain",
+    "author": "Ali Hazelwood",
+    "description": "A popular book titled 'Love on the Brain' by Ali Hazelwood.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 52,
+  "fields": {
+    "title": "People We Meet on Vacation",
+    "author": "Emily Henry",
+    "description": "A popular book titled 'People We Meet on Vacation' by Emily Henry.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 53,
+  "fields": {
+    "title": "Beach Read",
+    "author": "Emily Henry",
+    "description": "A popular book titled 'Beach Read' by Emily Henry.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 54,
+  "fields": {
+    "title": "Book Lovers",
+    "author": "Emily Henry",
+    "description": "A popular book titled 'Book Lovers' by Emily Henry.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 55,
+  "fields": {
+    "title": "The Spanish Love Deception",
+    "author": "Elena Armas",
+    "description": "A popular book titled 'The Spanish Love Deception' by Elena Armas.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 56,
+  "fields": {
+    "title": "The American Roommate Experiment",
+    "author": "Elena Armas",
+    "description": "A popular book titled 'The American Roommate Experiment' by Elena Armas.",
+    "genre": "other",
+    "available": true
+  }
+},
+{
+  "model": "library.book",
+  "pk": 57,
+  "fields": {
+    "title": "Twisted Love",
+    "author": "Ana Huang",
+    "description": "A popular book titled 'Twisted Love' by Ana Huang.",
+    "genre": "other",
+    "available": true
+  }
+}
+]
