@@ -1,29 +1,19 @@
+# Environment variables
 .env
+
+# Python cache
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment folders
-venv/
-myenv/
-.venv/
-
-# SQLite database
-db.sqlite3
+*.pyc
 
 # Django static files
-/staticfiles/
+staticfiles/
 
-# If your source static files are only in app folders, don't ignore /static/
-# Otherwise uncomment below if you have a top-level static/ that is only for collectstatic
-# /static/
+# Database files
+*.sqlite3
 
-# Migrations - ignore compiled, keep source
-*/migrations/*.pyc
-*/migrations/*.pyo
-!*/migrations/__init__.py
-
-# IDE and system files
+# IDE/project settings
 .vscode/
 .idea/
-.DS_Store
+*.sublime-project
+*.sublime-workspace
+

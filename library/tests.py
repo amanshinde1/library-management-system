@@ -34,12 +34,13 @@ class BookListViewTest(TestCase):
 class BorrowBookTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='peace', password='testpass123')
+        self.user_password = 'User$trongP@ss1'
+        self.user = User.objects.create_user(username='peace', password=self.user_password)
         self.book = Book.objects.create(title='Atomic Habits', author='James Clear', genre='Self-help', available=True)
         self.borrow_url = reverse('borrow_book', args=[self.book.id])
 
     def test_user_can_borrow_available_book(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
         response = self.client.get(self.borrow_url)
         self.book.refresh_from_db()
         borrow_entry = Borrow.objects.filter(user=self.user, book=self.book).first()
@@ -53,13 +54,14 @@ class BorrowBookTest(TestCase):
 class ReturnBookTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='peace', password='testpass123')
+        self.user_password = 'User$trongP@ss1'
+        self.user = User.objects.create_user(username='peace', password=self.user_password)
         self.book = Book.objects.create(title='Deep Work', author='Cal Newport', available=False)
         self.borrow = Borrow.objects.create(user=self.user, book=self.book, returned=False)
         self.return_url = reverse('return_book', args=[self.borrow.id])
 
     def test_user_can_return_book(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
         response = self.client.post(self.return_url)
         self.borrow.refresh_from_db()
         self.book.refresh_from_db()
@@ -72,25 +74,30 @@ class ReturnBookTest(TestCase):
 class ReaderAccessTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.staff_user = User.objects.create_user(username='admin', password='admin123', is_staff=True)
-        self.normal_user = User.objects.create_user(username='user', password='user123')
+        self.admin_password = 'Adm1n$trongP@ss!'
+        self.user_password = 'User$trongP@ss1'
+        self.staff_user = User.objects.create_user(username='admin', password=self.admin_password, is_staff=True)
+        self.normal_user = User.objects.create_user(username='user', password=self.user_password)
         self.url = reverse('reader_list')
 
     def test_staff_can_access_reader_list(self):
-        self.client.login(username='admin', password='admin123')
+        self.client.login(username='admin', password=self.admin_password)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_non_staff_cannot_access_reader_list(self):
-        self.client.login(username='user', password='user123')
+        self.client.login(username='user', password=self.user_password)
         response = self.client.get(self.url)
         self.assertNotEqual(response.status_code, 200)
 
 
 class ExportReadersCSVTest(TestCase):
     def setUp(self):
-        self.admin_user = User.objects.create_user(username='admin', password='adminpass', is_staff=True)
-        self.normal_user = User.objects.create_user(username='user', password='userpass')
+        self.client = Client()
+        self.admin_password = 'Adm1n$trongP@ss!'
+        self.user_password = 'User$trongP@ss1'
+        self.admin_user = User.objects.create_user(username='admin', password=self.admin_password, is_staff=True)
+        self.normal_user = User.objects.create_user(username='user', password=self.user_password)
         self.reader = Reader.objects.create(
             name="Test Reader",
             contact="1234567890",
@@ -98,10 +105,9 @@ class ExportReadersCSVTest(TestCase):
             address="Test Address",
             user=self.normal_user
         )
-        self.client = Client()
 
     def test_admin_can_export_csv(self):
-        self.client.login(username='admin', password='adminpass')
+        self.client.login(username='admin', password=self.admin_password)
         response = self.client.get(reverse('export_readers_csv'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'text/csv')
@@ -110,7 +116,7 @@ class ExportReadersCSVTest(TestCase):
         self.assertIn("Test Reader", content)
 
     def test_non_admin_cannot_export_csv(self):
-        self.client.login(username='user', password='userpass')
+        self.client.login(username='user', password=self.user_password)
         response = self.client.get(reverse('export_readers_csv'))
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
@@ -119,12 +125,13 @@ class ExportReadersCSVTest(TestCase):
 class CheckoutBagTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='peace', password='testpass123')
+        self.user_password = 'User$trongP@ss1'
+        self.user = User.objects.create_user(username='peace', password=self.user_password)
         self.book1 = Book.objects.create(title='Book 1', author='Author 1', available=True)
         self.book2 = Book.objects.create(title='Book 2', author='Author 2', available=False)
 
     def test_checkout_borrows_only_available_books_and_clears_bag(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
 
         # Set session variable for bag
         session = self.client.session
@@ -150,11 +157,12 @@ class CheckoutBagTest(TestCase):
 class UserProfileEditTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='peace', password='testpass123', email='peace@example.com')
+        self.user_password = 'User$trongP@ss1'
+        self.user = User.objects.create_user(username='peace', password=self.user_password, email='peace@example.com')
         self.url = reverse('edit_profile')
 
     def test_user_can_update_profile_info(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
         data = {
             'username': 'peace',
             'email': 'newemail@example.com',
@@ -171,43 +179,44 @@ class UserProfileEditTest(TestCase):
         self.assertEqual(self.user.email, 'newemail@example.com')
 
     def test_user_can_change_password(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
         data = {
             'username': 'peace',
             'email': 'peace@example.com',
             'first_name': '',
             'last_name': '',
             'phone': '',
-            'current_password': 'testpass123',
-            'new_password1': 'newstrongpass123',
-            'new_password2': 'newstrongpass123',
+            'current_password': self.user_password,
+            'new_password1': 'New$trongP@ssw0rd1',
+            'new_password2': 'New$trongP@ssw0rd1',
         }
         response = self.client.post(self.url, data)
         self.assertRedirects(response, reverse('user_profile'))
         self.client.logout()
-        login_successful = self.client.login(username='peace', password='newstrongpass123')
+        login_successful = self.client.login(username='peace', password='New$trongP@ssw0rd1')
         self.assertTrue(login_successful)
 
 
 class AdminReportsTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.admin = User.objects.create_user(username='admin', password='admin123', is_staff=True)
-        self.user = User.objects.create_user(username='user', password='user123')
+        self.admin_password = 'Adm1n$trongP@ss!'
+        self.user_password = 'User$trongP@ss1'
+        self.admin = User.objects.create_user(username='admin', password=self.admin_password, is_staff=True)
+        self.user = User.objects.create_user(username='user', password=self.user_password)
         self.book = Book.objects.create(title='Book Report', author='Author R', available=True)
         Borrow.objects.create(user=self.user, book=self.book, returned=False)
 
     def test_admin_can_view_reports(self):
-        self.client.login(username='admin', password='admin123')
+        self.client.login(username='admin', password=self.admin_password)
         response = self.client.get(reverse('admin_reports'))
         self.assertEqual(response.status_code, 200)
-        # Check keys present in context
         self.assertIn('total_books', response.context)
         self.assertIn('most_borrowed_books_labels', response.context)
         self.assertIn('most_active_readers_labels', response.context)
 
     def test_non_admin_cannot_view_reports(self):
-        self.client.login(username='user', password='user123')
+        self.client.login(username='user', password=self.user_password)
         response = self.client.get(reverse('admin_reports'))
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
@@ -216,8 +225,10 @@ class AdminReportsTest(TestCase):
 class OverdueBooksTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.staff = User.objects.create_user(username='staff', password='staff123', is_staff=True)
-        self.user = User.objects.create_user(username='user', password='user123')
+        self.staff_password = 'St@ff$trongP@ss1'
+        self.user_password = 'User$trongP@ss1'
+        self.staff = User.objects.create_user(username='staff', password=self.staff_password, is_staff=True)
+        self.user = User.objects.create_user(username='user', password=self.user_password)
         self.book = Book.objects.create(title='Overdue Book', author='Author O', available=False)
         Borrow.objects.create(
             user=self.user,
@@ -227,13 +238,13 @@ class OverdueBooksTest(TestCase):
         )
 
     def test_overdue_books_view_for_staff(self):
-        self.client.login(username='staff', password='staff123')
+        self.client.login(username='staff', password=self.staff_password)
         response = self.client.get(reverse('overdue_books'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Overdue Book')
 
     def test_non_staff_cannot_access_overdue_books(self):
-        self.client.login(username='user', password='user123')
+        self.client.login(username='user', password=self.user_password)
         response = self.client.get(reverse('overdue_books'))
         self.assertNotEqual(response.status_code, 200)
         self.assertIn(response.status_code, [302, 403])
@@ -242,12 +253,13 @@ class OverdueBooksTest(TestCase):
 class BorrowHistoryTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='peace', password='testpass123')
+        self.user_password = 'User$trongP@ss1'
+        self.user = User.objects.create_user(username='peace', password=self.user_password)
         self.book = Book.objects.create(title='History Book', author='Author H', available=True)
         Borrow.objects.create(user=self.user, book=self.book, returned=True)
 
     def test_borrow_history_view(self):
-        self.client.login(username='peace', password='testpass123')
+        self.client.login(username='peace', password=self.user_password)
         response = self.client.get(reverse('borrow_history'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'History Book')
@@ -256,7 +268,8 @@ class BorrowHistoryTest(TestCase):
 class ReaderCRUDTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.staff = User.objects.create_user(username='staff', password='staff123', is_staff=True)
+        self.staff_password = 'St@ff$trongP@ss1'
+        self.staff = User.objects.create_user(username='staff', password=self.staff_password, is_staff=True)
         self.reader = Reader.objects.create(
             name='Reader1',
             contact='1234567890',
@@ -266,7 +279,7 @@ class ReaderCRUDTest(TestCase):
         )
 
     def test_staff_can_add_reader(self):
-        self.client.login(username='staff', password='staff123')
+        self.client.login(username='staff', password=self.staff_password)
         data = {
             'name': 'New Reader',
             'contact': '0987654321',
@@ -279,7 +292,7 @@ class ReaderCRUDTest(TestCase):
         self.assertTrue(Reader.objects.filter(name='New Reader').exists())
 
     def test_staff_can_edit_reader(self):
-        self.client.login(username='staff', password='staff123')
+        self.client.login(username='staff', password=self.staff_password)
         data = {
             'name': 'Updated Reader',
             'contact': '1112223333',
@@ -293,7 +306,7 @@ class ReaderCRUDTest(TestCase):
         self.assertEqual(self.reader.name, 'Updated Reader')
 
     def test_staff_can_delete_reader(self):
-        self.client.login(username='staff', password='staff123')
+        self.client.login(username='staff', password=self.staff_password)
         response = self.client.post(reverse('delete_reader', args=[self.reader.id]))
         self.assertRedirects(response, reverse('reader_list'))
         self.assertFalse(Reader.objects.filter(id=self.reader.id).exists())
