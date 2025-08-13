@@ -1,68 +1,62 @@
-﻿CREATE TABLE books (
+-- ========================================
+-- Library Management System - Example DB
+-- ========================================
+
+-- Books table
+CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255),
     genre VARCHAR(100),
     published_year INT,
-    available BOOLEAN DEFAULT TRUE
+    total_copies INT DEFAULT 1
 );
-INSERT INTO books (title, author, genre, published_year)
+
+-- Example book data
+INSERT INTO books (title, author, genre, published_year, total_copies)
 VALUES
-('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937),
-('1984', 'George Orwell', 'Dystopian', 1949),
-('To Kill a Mockingbird', 'Harper Lee', 'Classic', 1960),
-('The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1925),
-('Python Crash Course', 'Eric Matthes', 'Programming', 2016);
-SELECT * FROM books;
+('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937, 5),
+('1984', 'George Orwell', 'Dystopian', 1949, 3),
+('To Kill a Mockingbird', 'Harper Lee', 'Classic', 1960, 4),
+('The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1925, 2),
+('Python Crash Course', 'Eric Matthes', 'Programming', 2016, 6);
+
+-- Students table (anonymized)
 CREATE TABLE students (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     enrolled_date DATE DEFAULT CURRENT_DATE
 );
+
+INSERT INTO students (name, email)
+VALUES
+('Student1', 'student1@example.com'),
+('Student2', 'student2@example.com'),
+('Student3', 'student3@example.com');
+
+-- Issued books table (empty, for safe example)
 CREATE TABLE issued_books (
     id SERIAL PRIMARY KEY,
     student_id INT REFERENCES students(id) ON DELETE CASCADE,
     book_id INT REFERENCES books(id) ON DELETE CASCADE,
     issue_date DATE DEFAULT CURRENT_DATE,
     return_date DATE,
-    returned BOOLEAN DEFAULT FALSE
+    returned BOOLEAN DEFAULT FALSE,
+    penalty NUMERIC(6, 2)
 );
-INSERT INTO students (name, email)
-VALUES
-('Aman Shinde', 'aman@example.com'),
-('Priya Sharma', 'priya@example.com'),
-('Rahul Mehta', 'rahul@example.com');
-INSERT INTO issued_books (student_id, book_id, return_date, returned)
-VALUES
-(1, 1, '2025-04-20', FALSE),
-(2, 2, '2025-04-18', FALSE);
-SELECT
-    s.name AS student_name,
-    b.title AS book_title,
-    i.issue_date,
-    i.return_date,
-    i.returned
-FROM
-    issued_books i
-JOIN students s ON i.student_id = s.id
-JOIN books b ON i.book_id = b.id;
-ALTER TABLE books
-ADD COLUMN total_copies INT DEFAULT 1;
-ALTER TABLE books
-DROP COLUMN available;
-SELECT b.title, 
-       b.total_copies - COUNT(i.id) AS available_copies
-FROM books b
-LEFT JOIN issued_books i ON b.id = i.book_id AND i.returned = FALSE
-GROUP BY b.id;
-ALTER TABLE issued_books
-ADD COLUMN penalty NUMERIC(6, 2);
+
+-- Admin users table (placeholder)
 CREATE TABLE admin_users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL
 );
+
+INSERT INTO admin_users (username, password_hash)
+VALUES ('admin', 'example_hashed_password');
+
+-- Example view for issued books summary
 CREATE VIEW issued_summary AS
 SELECT
     s.name AS student,
@@ -71,37 +65,13 @@ SELECT
     i.return_date,
     i.returned,
     i.penalty
-FROM
-    issued_books i
+FROM issued_books i
 JOIN students s ON i.student_id = s.id
 JOIN books b ON i.book_id = b.id;
-SELECT * FROM issued_summary;
-UPDATE books SET total_copies = 5 WHERE id = 1;
-UPDATE books SET total_copies = 3 WHERE id = 2;
-UPDATE books SET total_copies = 4 WHERE id = 3;
-SELECT 
-    b.title,
-    b.total_copies,
-    COUNT(i.id) FILTER (WHERE i.returned = FALSE) AS issued_count,
-    (b.total_copies - COUNT(i.id) FILTER (WHERE i.returned = FALSE)) AS available_copies
-FROM 
-    books b
-LEFT JOIN issued_books i ON b.id = i.book_id
-GROUP BY b.id;
-UPDATE issued_books
-SET penalty = 20.00
-WHERE return_date < CURRENT_DATE AND returned = FALSE;
-SELECT 
-    s.name AS student,
-    b.title AS book,
-    i.issue_date,
-    i.return_date,
-    i.returned,
-    i.penalty
-FROM
-    issued_books i
-JOIN students s ON i.student_id = s.id
-JOIN books b ON i.book_id = b.id;
-INSERT INTO admin_users (username, password_hash)
-VALUES ('admin', 'hashed_admin_password');
-SELECT * FROM admin_users;
+
+-- Sample SELECT queries for reference
+-- SELECT * FROM books;
+-- SELECT * FROM students;
+-- SELECT * FROM issued_books;
+-- SELECT * FROM admin_users;
+-- SELECT * FROM issued_summary;
